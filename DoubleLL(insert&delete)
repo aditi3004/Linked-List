@@ -154,7 +154,7 @@ public class AditiDLL {
 			System.out.println("Empty List");
 		}
 		while(temp!=null) {
-			System.out.print(temp.data+"-->");
+			System.out.print(temp.data+"<-->");
 			temp=temp.next;
 		}
 		System.out.println("NULL");
