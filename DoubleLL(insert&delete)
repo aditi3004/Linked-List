@@ -1,0 +1,181 @@
+package linkedLIst;
+
+import linkedLIst.AditiLL.node;
+
+public class AditiDLL {
+	
+	class node{
+		int data;
+		node next;
+		node previous;
+		
+		public node() {
+			
+		}
+		public node(int val) {
+			this.data=val;
+			this.next=null;
+			this.previous=null;
+			
+		}
+	}
+	node head;
+	int size=0;
+	
+	//1. insertion at first
+	public void insertAtFirst(int val) {
+		//corner case:the list is empty
+		node n=new node(val);
+		if(head==null) {
+			head=n;
+			size++;
+			return;
+		}
+		head.previous=n;
+		n.next=head;   //v imp
+		head=n;
+		size++;
+		
+	}
+	
+	//2.insertion at last
+	public void insertAtLast(int val) {
+		node n=new node();
+		node temp=head;
+		if(head==null) {//empty list hence last element==first element
+			insertAtFirst(val);
+			size++;
+			return;
+		}
+				
+		while(temp.next!=null) {
+			temp=temp.next;
+		}
+		temp.next=n;
+		n.previous=temp;
+		size++; //increment in the size of the linked list
+		
+	}
+	
+	
+	//insert at an index
+	public void insertAtIndex(int val,int index) {
+		node n=new node(val);
+		node temp=head;
+		node temp1=head;
+		if(head==null) {
+			insertAtFirst(val);
+			size++;
+			return;
+		}
+		if(index==size) {
+			insertAtLast(val);
+			size++;
+			return;
+		}
+		
+		//in both the for loop i starts from 1 because 
+		//temp,temp1=head points to head and are by default the 0th element 
+		for(int i=1;i<index;i++) {
+			temp=temp.next;
+		}
+		for(int i=1;i<index+1;i++) {//plus one because ye element is just next to the index
+			temp1=temp1.next;
+		}
+
+		temp.next=n;
+		n.previous=temp;
+		temp1.previous=n;
+		n.next=temp1;
+		size++;
+	}
+	
+	//deletion of the first element
+	public void deleteAtFirst() {
+		if(head==null) {
+			System.out.println("empty list cannot be deleted!!");
+			return;
+		}
+		head=head.next;
+		head.previous=null;
+		size--;
+		
+	}
+	
+	//deletion of the last element
+	public void deleteAtLast() {
+		if(head==null) {
+			System.out.println("empty string");
+			return;
+		}
+		
+		size--;
+		if(head.next==null) {
+			head=null;
+		}
+		node last=new node();
+		last=head;
+		for(int i=0;i<size-1;i++) {
+			last=last.next;
+		}
+		last.next=null;
+		
+	}
+	
+	//deletion at an index
+	public void deleteAtIndex(int index) {
+		if(index==0) {
+			deleteAtFirst();
+			return;
+		}
+		if(index==size) {
+			deleteAtLast();
+			return;
+		}
+		node l=new node();
+		node l1=new node();
+		l=head;
+		l1=head;
+		for(int i=1;i<index;i++) {
+			l=l.next;
+		}
+		for(int i=1;i<index+2;i++) {
+			l1=l1.next;
+		}
+		l.next=l1;
+		l1.previous=l;
+		size--;
+	}
+	
+	//displaying the list
+	public void display() {
+		node temp=head;  //because we can never change our head of the linked list
+		if(head==null) {
+			System.out.println("Empty List");
+		}
+		while(temp!=null) {
+			System.out.print(temp.data+"-->");
+			temp=temp.next;
+		}
+		System.out.println("NULL");
+		System.out.println(size);
+
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		AditiDLL l=new AditiDLL();
+		l.insertAtFirst(6);
+		l.insertAtFirst(5);
+		l.insertAtFirst(4);
+		l.insertAtFirst(3);
+		l.insertAtFirst(2);
+		l.display();
+		l.insertAtIndex(1,1);
+		l.display();
+		l.deleteAtLast();
+		l.display();
+		l.deleteAtIndex(2);
+		l.display();
+	}
+
+}
