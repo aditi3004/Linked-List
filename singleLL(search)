@@ -1,0 +1,195 @@
+package linkedLIst;
+import java.util.*;
+public class AditiLL {
+	class node{
+		int data;//instance variable
+		node next;
+		public node() {
+			
+		}
+		public node(int val) {
+			this.data=val;		//this give the value to the data 
+			this.next=null;		//this will give value NULL to the next node
+		}
+	}
+	
+	node head;
+	int size=0;
+	
+	//insertion in the single linked list
+	//1. insertion at first element
+	public void insertAtFirst(int val) {
+		//corner case1: if the list is empty head==tail
+		node n=new node(val);
+		if(head==null) {
+			head=n; //kyuki ki head value change karni hai!!
+			size++;
+			return;    //return isiliye kyu ki aage ke code me ghusne ka koi matlab hi nahi hai
+		}
+		
+		n.next=head;
+		head=n;
+		size++;
+	}
+	
+	
+	//2.insertion at last
+	
+	public void insertAtLast(int val) {
+		node n=new node(val);
+		if(head==null) {
+			//the list is empty therefore the insertion of the current element will
+			//make it the first and the last element in the LL;
+			insertAtFirst(val);
+			size++;
+			return;
+		}
+		
+		node temp=head;
+		while(temp.next!=null) {
+			temp=temp.next;
+		}
+		temp.next=n; //this makes the last node ka next point towards new node
+		size++;
+	}
+	
+	
+	//3.insert at a particular index
+	public void atIndex(int val,int index) {
+		node n=new node(val);
+		//corner case1:if the list is empty
+		if(index==0) {
+			insertAtFirst(val);
+			size++;
+			return;
+		}
+		if(index==size) {
+			insertAtLast(val);
+			size++;
+			return;
+		}
+		
+		node temp=head;
+		//for loop me i starts from 1 because temp=head is the 0th element
+		for(int i=1;i<index;i++) {//kyuki jis index par add krna hai uske pehle wale pr ruukna hoga n
+			temp=temp.next;
+		}
+		n.next=temp.next;  // this will make the list to continue after the insertion happens
+		temp.next=n;
+		size++;
+		
+	}
+	
+	
+	//deletion of the first element
+	public void deleteFirst() {
+		if(head==null) {
+			System.out.println("cannot perforn deletion in empty list");
+		}
+		head=head.next;
+		size--;
+	}
+	
+	//deletion of the last
+	public void deletelast() {
+		//corner case1:empty list
+		if(head==null) {
+			System.out.println("empty list");
+		}
+		//corner case2:only one element in the list
+		size--;
+		if(head.next==null) {
+			head=null;
+		}
+		//otherwise cases
+		node last=new node();
+		last=head;
+		for(int i=0;i<size-1;i++) {
+			last=last.next;
+		}
+		last.next=null;
+		
+	}
+	
+	//delete from the particular index:
+	public void deleteAtIndex(int index) {
+		node temp1=new node();
+		node temp2=new node();
+		temp1=head;
+		temp2=head;
+		for(int i=1;i<index;i++) {//because 0th is the head element
+			temp1=temp1.next;
+		}
+		for(int i=1;i<index+2;i++) {
+			temp2=temp2.next;
+		}
+		temp1.next=temp2;
+		size--;
+	}
+	
+	//searching the element in the LL
+	public void search(int val) {
+		int flag=0;
+		node temp=head;
+		while(temp!=null && temp.next!=null) {
+			if(temp.next.data==val) {
+				flag=1;
+				break;//return nahi karna hai aage check nahi hoga isiliye
+			}
+			else {
+				temp=temp.next;    //val nahi mila to aage badh jaao
+			}
+		}
+		if(flag==1) {
+			System.out.println("key found in the Linked List");
+		}
+		else {
+			System.out.println("key not found in the Linked List");
+		}
+		
+	}
+	
+	
+	//displaying the linked list
+	public void display() {
+		node temp=head;  //because we can never change our head of the linked list
+		if(head==null) {
+			System.out.println("Empty List");
+		}
+		while(temp!=null) {
+			System.out.print(temp.data+"-->");
+			temp=temp.next;
+		}
+		System.out.println("NULL");
+		System.out.println(size);
+		
+	}
+	
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		AditiLL l=new AditiLL();
+		l.insertAtFirst(3);
+		l.insertAtFirst(9);
+		l.insertAtFirst(4);
+		l.display();
+		l.insertAtLast(7);
+		l.display();
+		l.search(7);
+		l.atIndex(2, 1);
+		l.display();
+		l.atIndex(5, 2);
+		l.display();
+		l.search(7);
+		l.deleteFirst();
+		l.display();
+		l.deletelast();
+		l.display();
+		l.deleteAtIndex(1);
+		l.display();
+		
+		
+
+	}
+
+}
