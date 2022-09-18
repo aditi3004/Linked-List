@@ -1,0 +1,120 @@
+package linkedLIst;
+
+import linkedLIst.AditiDLL.node;
+
+public class AditiCLL {
+	class node{
+		int data;
+		node next;
+		
+		public node() {
+			
+		}
+		public node(int val) {
+			this.data=val;
+			this.next=null;
+		}
+	}
+	node head;
+	node tail;
+	int size;
+	//insertion at first
+	public void insert(int val) {
+		node n=new node(val);
+		if(head==null) {//if the list id empty
+			head=n;
+			tail=n;
+			size++;
+			return;
+		}
+		
+		tail.next=n;
+		n.next=head;
+		tail=n;
+		size++;
+		
+	}
+	public void insertAtRandom(int val,int index) {
+		if(index==1) {
+			insert(val);
+			return;
+		}
+		node n=new node(val);
+		node temp=head;
+		for(int i=1;i<index;i++) {
+			n.next=temp.next;
+			temp.next=n;
+			size++;
+		}
+	}
+	
+	// deletion from circular linked list
+	//it involves all the kind of deletion like at first ,last and arbitary point
+	public void delete(int val) {
+		if(head.data==val) {//deletion of head
+			tail.next=head.next;
+			head=head.next;
+			size--;
+			return;
+		}
+		//deletion of tail
+		if(head!=tail){//to check whether the list has two diff head and tail 
+			node curr=head;
+			while(curr.next!=tail) {
+				curr=curr.next;
+			}
+			tail=curr;
+			tail.next=head;
+			size--;
+		}
+		
+		//deletion at particular point
+		node temp=head;
+		while(temp.next!=head) {//very imp idhar temp.next kabhi bhi null nahi hoga instead last will be 
+			//found by while(temp.next!=head)
+			if(temp.next.data==val) {
+				temp.next=temp.next.next;
+				size--;
+			}
+			else {
+				temp=temp.next;
+			}
+		}
+	}
+	
+	
+	//displaying the list
+		public void display() {
+			node temp=head;  //because we can never change our head of the linked list
+			if(head==null) {
+				System.out.println("Empty List");
+			}
+			if(head!=null) {
+				do {
+					System.out.print(temp.data+"-->");
+					temp=temp.next;
+				}while(temp!=head);
+			}System.out.println("HEAD");
+			System.out.println(size);
+
+		}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		AditiCLL l=new AditiCLL();
+		l.insert(5);
+		l.insert(4);
+		l.insert(3);
+		l.insert(2);
+		l.insert(1);
+		l.display();
+		l.delete(1);
+		l.display();
+		l.delete(5);
+		l.display();
+		l.insertAtRandom(7, 1);
+		l.display();
+		
+	}
+
+}
